@@ -3,8 +3,7 @@ import Layout from '../layouts/Layout.astro';
 
 const links = [
 	{ label: 'github', href: 'https://github.com/shujanshaikh' },
-	{ label: 'linkedin', href: 'https://www.linkedin.com/in/shujanshaikh/' },
-	{ label: 'writing', href: 'https://x.com/shujanshaikh' },
+	{ label: 'x', href: 'https://x.com/shujanshaikh' },
 	{ label: 'email', href: 'mailto:shaikhshujan@gmail.com' },
 ];
 
@@ -14,46 +13,48 @@ const externalAttrs = (href: string) =>
 
 <Layout>
 	<div class="relative flex min-h-dvh w-full flex-col" style="background-color: var(--bg); color: var(--fg);">
-		<main class="relative z-10 mx-auto flex w-full max-w-2xl flex-col px-6 py-10 md:px-10 md:py-14">
+		<main class="relative z-10 mx-auto flex w-full max-w-lg flex-col px-6 py-10 md:px-8 md:py-14">
 			<!-- Header -->
-			<header class="reveal flex items-center justify-between border-b pb-4" style="border-color: var(--border);">
-				<div class="flex items-center gap-2.5">
-					<div class="h-2 w-2" style="background-color: var(--primary);" />
-					<span class="text-[12px] font-medium tracking-[0.12em] uppercase" style="color: var(--fg-muted);">Shujan Shaikh</span>
-				</div>
-				<div class="flex items-center gap-2">
-					<span class="relative flex h-1.5 w-1.5">
-						<span class="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style="background-color: var(--primary);" />
-						<span class="relative inline-flex h-1.5 w-1.5 rounded-full" style="background-color: var(--primary);" />
-					</span>
-					<span class="text-[11px] tracking-[0.08em] uppercase" style="color: var(--fg-dim);">online</span>
-				</div>
+			<header class="reveal flex items-center justify-between pb-6">
+				<span class="text-[11px] tracking-[0.15em] uppercase" style="color: var(--fg-muted);">Shujan Shaikh</span>
+				<button
+					id="theme-toggle"
+					class="text-[11px] tracking-[0.08em] uppercase transition-colors duration-200"
+					style="color: var(--fg-dim);"
+					onmouseenter="this.style.color='var(--primary)'"
+					onmouseleave="this.style.color='var(--fg-dim)'"
+					aria-label="Toggle theme"
+				>
+					[ theme ]
+				</button>
 			</header>
 
 			<!-- Hero -->
-			<section class="reveal flex items-center gap-5 py-8">
-				<div class="h-16 w-16 shrink-0 overflow-hidden" style="border: 1.5px solid var(--border);">
+			<section class="reveal flex items-center gap-4 py-6">
+				<div class="h-14 w-14 shrink-0 overflow-hidden" style="border: 1.5px solid var(--border);">
 					<img src="/profile.png" alt="Shujan Shaikh" class="h-full w-full object-cover" loading="eager" decoding="async" />
 				</div>
 				<div>
-					<h1 class="text-[18px] font-bold tracking-tight">SHUJAN SHAIKH</h1>
-					<p class="mt-1 text-[13px]" style="color: var(--fg-muted);">Building software for the fun of it.</p>
-					<nav class="mt-3 flex flex-wrap gap-x-4 gap-y-1">
-						{links.map((link) => (
-							<a
-								href={link.href}
-								class="text-[11px] tracking-[0.06em] uppercase transition-colors duration-200"
-								style="color: var(--fg-dim);"
-								onmouseenter="this.style.color='var(--primary)'"
-								onmouseleave="this.style.color='var(--fg-dim)'"
-								{...externalAttrs(link.href)}
-							>
-								{link.label}
-							</a>
-						))}
-					</nav>
+					<h1 class="text-[17px] font-semibold tracking-tight">Shujan Shaikh</h1>
+					<p class="mt-1 text-[12px]" style="color: var(--fg-muted);">Building software for the fun of it.</p>
 				</div>
 			</section>
+
+			<!-- Links -->
+			<nav aria-label="Primary" class="reveal stagger-1 flex gap-3 pb-8">
+				{links.map((link) => (
+					<a
+						href={link.href}
+						class="text-[11px] tracking-[0.06em] uppercase transition-colors duration-200"
+						style="color: var(--fg-dim);"
+						onmouseenter="this.style.color='var(--primary)'"
+						onmouseleave="this.style.color='var(--fg-dim)'"
+						{...externalAttrs(link.href)}
+					>
+						{link.label}
+					</a>
+				))}
+			</nav>
 
 			<!-- Divider -->
 			<div class="h-px w-full" style="background-color: var(--border);" />
@@ -61,58 +62,26 @@ const externalAttrs = (href: string) =>
 			<!-- AMA -->
 			<section class="py-8">
 				<div class="reveal mb-4 flex items-center justify-between">
-					<div class="flex items-center gap-2.5">
-						<span class="text-[14px] font-bold">AMA</span>
-						<span class="text-[10px] tracking-[0.1em] uppercase" style="color: var(--fg-dim);">[ project ]</span>
-					</div>
-					<div class="flex gap-2">
-						<a href="https://ama.shujan.xyz" target="_blank" rel="noopener noreferrer" class="border px-2.5 py-1 text-[10px] tracking-[0.08em] uppercase transition-all duration-200" style="border-color: var(--border); color: var(--fg-dim);" onmouseenter="this.style.borderColor='var(--primary)'; this.style.color='var(--primary)'" onmouseleave="this.style.borderColor='var(--border)'; this.style.color='var(--fg-dim)'">live</a>
-						<a href="https://github.com/shujanshaikh/ama" target="_blank" rel="noopener noreferrer" class="border px-2.5 py-1 text-[10px] tracking-[0.08em] uppercase transition-all duration-200" style="border-color: var(--border); color: var(--fg-dim);" onmouseenter="this.style.borderColor='var(--primary)'; this.style.color='var(--primary)'" onmouseleave="this.style.borderColor='var(--border)'; this.style.color='var(--fg-dim)'">repo</a>
+					<span class="text-[13px] font-semibold">ama</span>
+					<div class="flex gap-3">
+						<a href="https://ama.shujan.xyz" target="_blank" rel="noopener noreferrer" class="text-[10px] tracking-[0.08em] uppercase transition-colors duration-200" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">live</a>
+						<a href="https://github.com/shujanshaikh/ama" target="_blank" rel="noopener noreferrer" class="text-[10px] tracking-[0.08em] uppercase transition-colors duration-200" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">repo</a>
 					</div>
 				</div>
 
-				<!-- Browser Window -->
 				<div class="reveal stagger-1">
-					<div style="border: 1.5px solid var(--border);">
-						<!-- Chrome -->
-						<div class="flex items-center gap-2 px-3 py-2" style="border-bottom: 1.5px solid var(--border); background-color: var(--bg-soft);">
-							<div class="h-2 w-2 rounded-full" style="background-color: var(--primary);" />
-							<div class="h-2 w-2 rounded-full" style="background-color: var(--border);" />
-							<div class="h-2 w-2 rounded-full" style="background-color: var(--border);" />
-							<div class="ml-2 flex-1 truncate px-2 py-0.5 text-[10px] tracking-wide" style="background-color: var(--bg); color: var(--fg-dim); border: 1px solid var(--border);">ama.shujan.xyz</div>
-						</div>
-						<!-- Iframe (scrollbar clipped) -->
-						<div class="relative w-full overflow-hidden" style="height: 320px;">
-							<iframe
-								src="https://ama.shujan.xyz"
-								title="AMA Preview"
-								class="h-full"
-								loading="lazy"
-								scrolling="no"
-								style="background-color: var(--bg); border: none; width: calc(100% + 20px); margin-right: -20px; overflow: hidden;"
-							></iframe>
-						</div>
+					<div class="relative w-full overflow-hidden" style="border: 1px solid var(--border); height: 260px;">
+						<iframe
+							src="https://ama.shujan.xyz"
+							title="AMA Preview"
+							class="h-full"
+							loading="lazy"
+							scrolling="no"
+							style="background-color: var(--bg); border: none; width: calc(100% + 20px); margin-right: -20px; overflow: hidden;"
+						></iframe>
 					</div>
-				</div>
-
-				<div class="reveal stagger-2 mt-3 flex gap-2">
-					<span class="border px-2 py-0.5 text-[10px] tracking-[0.08em] uppercase" style="border-color: var(--border); color: var(--fg-dim);">AI</span>
-					<span class="border px-2 py-0.5 text-[10px] tracking-[0.08em] uppercase" style="border-color: var(--border); color: var(--fg-dim);">Local-first</span>
 				</div>
 			</section>
-
-			<!-- Divider -->
-			<div class="h-px w-full" style="background-color: var(--border);" />
-
-			<!-- Footer -->
-			<footer class="flex items-center justify-between py-5">
-				<span class="text-[10px] tracking-[0.08em] uppercase" style="color: var(--fg-dim);">© 2025 Shujan Shaikh</span>
-				<div class="flex gap-4">
-					<a href="https://github.com/shujanshaikh" target="_blank" rel="noopener noreferrer" class="text-[10px] tracking-[0.08em] uppercase transition-colors" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">GH</a>
-					<a href="https://x.com/shujanshaikh" target="_blank" rel="noopener noreferrer" class="text-[10px] tracking-[0.08em] uppercase transition-colors" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">X</a>
-					<a href="mailto:shaikhshujan@gmail.com" class="text-[10px] tracking-[0.08em] uppercase transition-colors" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">Mail</a>
-				</div>
-			</footer>
 		</main>
 	</div>
 </Layout>
