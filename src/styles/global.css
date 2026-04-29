@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: "IBM Plex Mono", ui-monospace, "Cascadia Mono", "Source Code Pro", Menlo, monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+:root {
+  --bg: oklch(0.1641 0.0064 285.6767);
+  --bg-soft: oklch(0.1857 0.0082 285.5695);
+  --bg-muted: oklch(0.2272 0.0118 285.4252);
+  --fg: oklch(0.7713 0.0086 196.9785);
+  --fg-muted: oklch(0.5388 0.0177 285.7895);
+  --fg-dim: oklch(0.5388 0.0177 285.7895);
+  --primary: oklch(0.7193 0.0439 196.2166);
+  --primary-fg: oklch(0.1483 0.0109 284.9903);
+  --accent: oklch(0.3045 0.0403 314.1719);
+  --accent-fg: oklch(0.8114 0.0793 314.3502);
+  --border: oklch(0.2633 0.0071 285.9047);
+  --input: oklch(0.2067 0.0100 285.4885);
+  --shadow: 2px 2px 0px 1px oklch(0 0 0);
+}
+
+@layer base {
+  html {
+    background-color: var(--bg);
+    color-scheme: dark;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: var(--font-sans);
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-fg);
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+}
+
+@layer components {
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .stagger-1 { transition-delay: 0.06s; }
+  .stagger-2 { transition-delay: 0.12s; }
+  .stagger-3 { transition-delay: 0.18s; }
+  .stagger-4 { transition-delay: 0.24s; }
+  .stagger-5 { transition-delay: 0.30s; }
+  .stagger-6 { transition-delay: 0.36s; }
+
+  .pixel-shadow {
+    box-shadow: 2px 2px 0px 1px oklch(0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
