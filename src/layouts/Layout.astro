@@ -4,12 +4,57 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  canonicalURL?: string;
 }
 
 const {
   title = 'Shujan Shaikh',
-  description = 'tldr; just a curious mind learning and building software for the fun of it.',
+  description = 'Shujan Shaikh is a software developer and curious mind building software for the fun of it. Explore projects, AMA, and connect.',
+  image = 'https://shujan.xyz/profile.png',
+  canonicalURL = Astro.url.href,
 } = Astro.props;
+
+const siteUrl = 'https://shujan.xyz';
+const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Shujan Shaikh',
+  url: siteUrl,
+  image: absoluteImage,
+  sameAs: [
+    'https://github.com/shujanshaikh',
+    'https://x.com/shujanshaikh',
+  ],
+  jobTitle: 'Software Developer',
+  description: description,
+  knowsAbout: ['Software Development', 'Web Development', 'Open Source', 'Programming'],
+};
+
+const webPageSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebPage',
+  name: title,
+  description: description,
+  url: canonicalURL,
+  image: absoluteImage,
+  author: {
+    '@type': 'Person',
+    name: 'Shujan Shaikh',
+    url: siteUrl,
+  },
+  publisher: {
+    '@type': 'Person',
+    name: 'Shujan Shaikh',
+    url: siteUrl,
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': canonicalURL,
+  },
+};
 ---
 
 <!doctype html>
@@ -20,18 +65,41 @@ const {
     <link rel="icon" type="image/png" href="/profile.png" />
     <link rel="apple-touch-icon" href="/profile.png" />
     <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <meta name="author" content="Shujan Shaikh" />
+    <meta name="keywords" content="Shujan Shaikh, software developer, web developer, programmer, open source, github, portfolio, shujan, shaikh" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="theme-color" content="#1a1a1a" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:site_name" content="Shujan Shaikh" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/profile.png" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:image" content={absoluteImage} />
+    <meta property="og:image:alt" content="Shujan Shaikh - Software Developer" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@shujanshaikh" />
+    <meta name="twitter:creator" content="@shujanshaikh" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content="/profile.png" />
-    <title>{title}</title>
+    <meta name="twitter:image" content={absoluteImage} />
+    <meta name="twitter:image:alt" content="Shujan Shaikh - Software Developer" />
 
+    <!-- Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(personSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
