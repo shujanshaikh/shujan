@@ -1,8 +1,8 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const pageTitle = 'Shujan Shaikh - Software Developer & Builder';
-const pageDescription = 'Shujan Shaikh is a software developer and curious mind learning and building software for the fun of it. Explore projects, AMA, and connect with Shujan Shaikh.';
+const pageTitle = 'Shujan Shaikh';
+const pageDescription = 'just a curious mind learning and building software for the fun of it.';
 
 const links = [
 	{ label: 'github', href: 'https://github.com/shujanshaikh' },
@@ -31,34 +31,32 @@ const externalAttrs = (href: string) =>
 					style="color: var(--fg-dim);"
 					onmouseenter="this.style.color='var(--primary)'"
 					onmouseleave="this.style.color='var(--fg-dim)'"
-					aria-label="Toggle theme"
+					aria-label="toggle theme"
 				>
 					[ theme ]
 				</button>
 			</header>
 
-			<!-- Hero / Profile -->
-			<section class="reveal flex items-center gap-4 py-6" aria-label="Profile">
+			<section class="reveal flex items-center gap-4 py-6" aria-label="profile">
+				<div>
+					<h1 class="text-[17px] font-semibold tracking-tight" itemprop="name">Shujan Shaikh</h1>
+					<p class="mt-1 text-[12px]" style="color: var(--fg-muted);" itemprop="description">
+						just a curious mind learning and building software for the fun of it.
+					</p>
+				</div>
 				<div class="h-14 w-14 shrink-0 overflow-hidden" style="border: 1.5px solid var(--border);">
 					<img
 						src="/profile.png"
-						alt="Shujan Shaikh - Software Developer"
+						alt="Shujan Shaikh - software developer"
 						class="h-full w-full object-cover"
 						loading="eager"
 						decoding="async"
 						itemprop="image"
 					/>
 				</div>
-				<div>
-					<h1 class="text-[17px] font-semibold tracking-tight" itemprop="name">Shujan Shaikh</h1>
-					<p class="mt-1 text-[12px]" style="color: var(--fg-muted);" itemprop="description">
-						Software developer, curious mind, and open-source enthusiast learning and building software for the fun of it.
-					</p>
-				</div>
 			</section>
 
-			<!-- Links -->
-			<nav aria-label="Social links" class="reveal stagger-1 flex gap-3 pb-8">
+			<nav aria-label="social links" class="reveal stagger-1 flex gap-3 pb-8">
 				{links.map((link) => (
 					<a
 						href={link.href}
@@ -78,48 +76,44 @@ const externalAttrs = (href: string) =>
 			<div class="h-px w-full" style="background-color: var(--border);" />
 
 			<!-- About / Bio -->
-			<section class="py-8" aria-label="About Shujan Shaikh">
+			<section class="py-8" aria-label="about Shujan Shaikh">
 				<h2 class="reveal mb-4 text-[13px] font-semibold">about</h2>
 				<div class="reveal stagger-1 space-y-3 text-[12px] leading-relaxed" style="color: var(--fg-muted);">
 					<p>
-						Hi, I am <strong style="color: var(--fg);">Shujan Shaikh</strong>. I am a software developer who enjoys building things on the web and exploring new technologies. I believe in learning by doing and shipping small, useful projects.
+						hi, i am <strong style="color: var(--fg);">Shujan Shaikh</strong>. i am a software developer who enjoys building things on the web and exploring new technologies. i believe in learning by doing and shipping small, useful projects.
 					</p>
 					<p>
-						My work spans front-end development, open-source tooling, and experimental side projects. I share what I build on <a href="https://github.com/shujanshaikh" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 transition-colors duration-200" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">GitHub</a> and thoughts on <a href="https://x.com/shujanshaikh" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 transition-colors duration-200" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">X</a>.
+						i share what i build on <a href="https://github.com/shujanshaikh" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 transition-colors duration-200" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">github</a> and thoughts on <a href="https://x.com/shujanshaikh" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 transition-colors duration-200" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">x</a>.
 					</p>
 					<p>
-						If you want to get in touch, feel free to reach out via <a href="mailto:shaikhshujan@gmail.com" class="underline underline-offset-2 transition-colors duration-200" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">email</a>.
+						if you want to get in touch, feel free to reach out via <a href="mailto:shaikhshujan@gmail.com" class="underline underline-offset-2 transition-colors duration-200" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">email</a>.
 					</p>
 				</div>
 			</section>
 
-			<!-- Divider -->
 			<div class="h-px w-full" style="background-color: var(--border);" />
 
-			<!-- Projects -->
-			<section class="py-8" aria-label="Projects by Shujan Shaikh">
+			<section class="py-8" aria-label="projects by Shujan Shaikh">
 				<h2 class="reveal mb-4 text-[13px] font-semibold">projects</h2>
 				<div class="reveal stagger-1 space-y-4">
 					<article class="group">
 						<a href="https://ama.shujan.xyz" target="_blank" rel="noopener noreferrer" class="block">
-							<h3 class="text-[12px] font-medium transition-colors duration-200 group-hover:text-[var(--primary)]">AMA</h3>
-							<p class="mt-1 text-[11px]" style="color: var(--fg-dim);">An interactive ask-me-anything platform built by Shujan Shaikh.</p>
+							<h3 class="text-[12px] font-medium transition-colors duration-200 group-hover:text-[var(--primary)]">ama</h3>
+							<p class="mt-1 text-[11px]" style="color: var(--fg-dim);">lovable but for localhost</p>
 						</a>
 					</article>
 					<article class="group">
 						<a href="https://github.com/shujanshaikh" target="_blank" rel="noopener noreferrer" class="block">
-							<h3 class="text-[12px] font-medium transition-colors duration-200 group-hover:text-[var(--primary)]">Open Source</h3>
-							<p class="mt-1 text-[11px]" style="color: var(--fg-dim);">Explore more projects and contributions on GitHub.</p>
+							<h3 class="text-[12px] font-medium transition-colors duration-200 group-hover:text-[var(--primary)]">open source</h3>
+							<p class="mt-1 text-[11px]" style="color: var(--fg-dim);">explore more projects and contributions on github.</p>
 						</a>
 					</article>
 				</div>
 			</section>
 
-			<!-- Divider -->
 			<div class="h-px w-full" style="background-color: var(--border);" />
 
-			<!-- AMA Preview -->
-			<section class="py-8" aria-label="AMA by Shujan Shaikh">
+			<section class="py-8" aria-label="ama by Shujan Shaikh">
 				<div class="reveal mb-4 flex items-center justify-between">
 					<h2 class="text-[13px] font-semibold">ama</h2>
 					<div class="flex gap-3">
@@ -132,7 +126,7 @@ const externalAttrs = (href: string) =>
 					<div class="relative w-full overflow-hidden" style="border: 1px solid var(--border); height: 260px;">
 						<iframe
 							src="https://ama.shujan.xyz"
-							title="AMA by Shujan Shaikh"
+							title="ama by Shujan Shaikh"
 							class="h-full"
 							loading="lazy"
 							scrolling="no"
@@ -142,10 +136,9 @@ const externalAttrs = (href: string) =>
 				</div>
 			</section>
 
-			<!-- Footer -->
 			<footer class="reveal pt-8 pb-4">
 				<p class="text-[10px] tracking-[0.08em] uppercase" style="color: var(--fg-dim);">
-					© {new Date().getFullYear()} Shujan Shaikh. All rights reserved.
+					© {new Date().getFullYear()} Shujan Shaikh. all rights reserved.
 				</p>
 			</footer>
 		</main>
