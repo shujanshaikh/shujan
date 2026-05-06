@@ -97,10 +97,35 @@ const externalAttrs = (href: string) =>
 				<h2 class="reveal mb-4 text-[13px] font-semibold">projects</h2>
 				<div class="reveal stagger-1 space-y-4">
 					<article class="group">
-						<a href="https://ama.shujan.xyz" target="_blank" rel="noopener noreferrer" class="block">
-							<h3 class="text-[12px] font-medium transition-colors duration-200 group-hover:text-[var(--primary)]">ama</h3>
-							<p class="mt-1 text-[11px]" style="color: var(--fg-dim);">lovable but for localhost</p>
-						</a>
+						<h3 class="text-[12px] font-medium">ama</h3>
+						<p class="mt-1 text-[11px]" style="color: var(--fg-dim);">lovable but for localhost</p>
+						<div class="mt-2 flex items-center gap-3">
+							<a
+								href="https://ama.shujan.xyz"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inline-block text-[10px] tracking-[0.08em] uppercase transition-colors duration-200"
+								style="color: var(--fg-dim);"
+								onmouseenter="this.style.color='var(--primary)'"
+								onmouseleave="this.style.color='var(--fg-dim)'"
+							>
+								open project
+							</a>
+							<a
+								href="https://github.com/shujanshaikh/ama"
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inline-flex transition-colors duration-200"
+								style="color: var(--fg-dim);"
+								onmouseenter="this.style.color='var(--primary)'"
+								onmouseleave="this.style.color='var(--fg-dim)'"
+								aria-label="open ama on github"
+							>
+								<svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+									<path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 3.86c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
+								</svg>
+							</a>
+						</div>
 					</article>
 					<article class="group">
 						<a href="https://github.com/shujanshaikh" target="_blank" rel="noopener noreferrer" class="block">
@@ -108,31 +133,6 @@ const externalAttrs = (href: string) =>
 							<p class="mt-1 text-[11px]" style="color: var(--fg-dim);">explore more projects and contributions on github.</p>
 						</a>
 					</article>
-				</div>
-			</section>
-
-			<div class="h-px w-full" style="background-color: var(--border);" />
-
-			<section class="py-8" aria-label="ama by Shujan Shaikh">
-				<div class="reveal mb-4 flex items-center justify-between">
-					<h2 class="text-[13px] font-semibold">ama</h2>
-					<div class="flex gap-3">
-						<a href="https://ama.shujan.xyz" target="_blank" rel="noopener noreferrer" class="text-[10px] tracking-[0.08em] uppercase transition-colors duration-200" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">live</a>
-						<a href="https://github.com/shujanshaikh/ama" target="_blank" rel="noopener noreferrer" class="text-[10px] tracking-[0.08em] uppercase transition-colors duration-200" style="color: var(--fg-dim);" onmouseenter="this.style.color='var(--primary)'" onmouseleave="this.style.color='var(--fg-dim)'">repo</a>
-					</div>
-				</div>
-
-				<div class="reveal stagger-1">
-					<div class="relative w-full overflow-hidden" style="border: 1px solid var(--border); height: 260px;">
-						<iframe
-							src="https://ama.shujan.xyz"
-							title="ama by Shujan Shaikh"
-							class="h-full"
-							loading="lazy"
-							scrolling="no"
-							style="background-color: var(--bg); border: none; width: calc(100% + 20px); margin-right: -20px; overflow: hidden;"
-						></iframe>
-					</div>
 				</div>
 			</section>
 
