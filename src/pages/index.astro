@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import GitHubContributions from '../components/GitHubContributions.astro';
 
 const pageTitle = 'Shujan Shaikh';
 const pageDescription = 'just a curious mind learning and building software for the fun of it.';
@@ -135,6 +136,10 @@ const externalAttrs = (href: string) =>
 					</article>
 				</div>
 			</section>
+
+			<div class="h-px w-full" style="background-color: var(--border);" />
+
+			<GitHubContributions />
 
 			<footer class="reveal pt-8 pb-4">
 				<p class="text-[10px] tracking-[0.08em] uppercase" style="color: var(--fg-dim);">

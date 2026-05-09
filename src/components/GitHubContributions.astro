@@ -1,0 +1,322 @@
+---
+const username = 'shujanshaikh';
+---
+
+<section class="py-8" aria-label="GitHub contributions">
+  <h2 class="reveal mb-4 text-[13px] font-semibold">contributions</h2>
+  <div class="reveal stagger-1">
+    <div class="gh-wrap" data-username={username}>
+      <div class="gh-loading text-[11px]" style="color: var(--fg-dim);">
+        loading contributions...
+      </div>
+      <svg class="gh-graph" style="display: none;" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="gh-footer" style="display: none;">
+        <span class="gh-total text-[11px]" style="color: var(--fg-dim);"></span>
+        <div class="gh-legend">
+          <span class="text-[10px]" style="color: var(--fg-dim);">less</span>
+          <svg width="10" height="10"><rect width="10" height="10" rx="2" class="gh-l0"/></svg>
+          <svg width="10" height="10"><rect width="10" height="10" rx="2" class="gh-l1"/></svg>
+          <svg width="10" height="10"><rect width="10" height="10" rx="2" class="gh-l2"/></svg>
+          <svg width="10" height="10"><rect width="10" height="10" rx="2" class="gh-l3"/></svg>
+          <svg width="10" height="10"><rect width="10" height="10" rx="2" class="gh-l4"/></svg>
+          <span class="text-[10px]" style="color: var(--fg-dim);">more</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .gh-wrap {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .gh-graph {
+    display: block;
+    overflow: visible;
+    min-width: max-content;
+  }
+  .gh-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.75rem;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .gh-legend {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .gh-legend svg {
+    display: block;
+  }
+  .gh-tooltip {
+    position: fixed;
+    z-index: 50;
+    pointer-events: none;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 11px;
+    line-height: 1.4;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    background: var(--bg-soft);
+    color: var(--fg);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .gh-tooltip.visible {
+    opacity: 1;
+  }
+</style>
+
+<script is:inline>
+(function () {
+  const BLOCK = 10;
+  const MARGIN = 3;
+  const RADIUS = 2;
+  const LABEL_H = 16;
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function formatDate(dateStr) {
+    const d = new Date(dateStr);
+    const day = String(d.getDate()).padStart(2, '0');
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const year = d.getFullYear();
+    return `${day}.${month}.${year}`;
+  }
+
+  function getLevelFill(level) {
+    // Use CSS custom properties via inline style on the element or class
+    // We'll use a data attribute and let CSS handle it, but since we need
+    // dynamic theme support, we use fill with currentColor approach or
+    // rely on CSS classes defined below.
+    return `var(--gh-level-${level})`;
+  }
+
+  async function init() {
+    const wrap = document.querySelector('.gh-wrap');
+    if (!wrap) return;
+    const username = wrap.dataset.username;
+    const loading = wrap.querySelector('.gh-loading');
+    const svg = wrap.querySelector('.gh-graph');
+    const footer = wrap.querySelector('.gh-footer');
+    const totalEl = wrap.querySelector('.gh-total');
+
+    try {
+      const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
+      if (!res.ok) throw new Error('fetch failed');
+      const data = await res.json();
+      const contributions = data.contributions || [];
+      if (!contributions.length) throw new Error('no data');
+
+      // Build date map
+      const cmap = new Map();
+      contributions.forEach(c => cmap.set(c.date, c));
+
+      // Determine date range
+      const firstDate = new Date(contributions[0].date);
+      const lastDate = new Date(contributions[contributions.length - 1].date);
+
+      // Pad to start on Sunday
+      const startDay = firstDate.getDay();
+      const days = [];
+      for (let i = 0; i < startDay; i++) days.push(null);
+
+      // Fill all days in range
+      const cursor = new Date(firstDate);
+      cursor.setDate(cursor.getDate() - startDay);
+      const end = new Date(lastDate);
+      while (cursor <= end) {
+        const ds = cursor.toISOString().split('T')[0];
+        days.push(cmap.get(ds) || { date: ds, count: 0, level: 0 });
+        cursor.setDate(cursor.getDate() + 1);
+      }
+
+      // Group into weeks
+      const weeks = [];
+      for (let i = 0; i < days.length; i += 7) {
+        weeks.push(days.slice(i, i + 7));
+      }
+
+      // Ensure each week has 7 items
+      weeks.forEach(w => {
+        while (w.length < 7) w.push(null);
+      });
+
+      const width = weeks.length * (BLOCK + MARGIN) - MARGIN;
+      const height = LABEL_H + 7 * (BLOCK + MARGIN) - MARGIN;
+
+      svg.setAttribute('width', width);
+      svg.setAttribute('height', height);
+      svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+      svg.style.display = 'block';
+      if (loading) loading.style.display = 'none';
+      footer.style.display = 'flex';
+
+      // Month labels
+      const monthLabels = [];
+      weeks.forEach((week, wi) => {
+        const first = week.find(d => d);
+        if (!first) return;
+        const m = new Date(first.date).getMonth();
+        const label = MONTHS[m];
+        const prev = monthLabels[monthLabels.length - 1];
+        if (wi === 0 || !prev || prev.label !== label) {
+          monthLabels.push({ weekIndex: wi, label });
+        }
+      });
+
+      // Filter month labels to avoid crowding
+      const filteredMonths = monthLabels.filter((item, idx, arr) => {
+        const minWeeks = 3;
+        if (idx === 0) {
+          return arr[1] && arr[1].weekIndex - item.weekIndex >= minWeeks;
+        }
+        if (idx === arr.length - 1) {
+          return weeks.slice(item.weekIndex).length >= minWeeks;
+        }
+        return true;
+      });
+
+      // SVG namespace
+      const ns = 'http://www.w3.org/2000/svg';
+
+      // Title
+      const title = document.createElementNS(ns, 'title');
+      title.textContent = 'GitHub Contributions';
+      svg.appendChild(title);
+
+      // Month label group
+      const labelG = document.createElementNS(ns, 'g');
+      labelG.setAttribute('fill', 'currentColor');
+      labelG.setAttribute('class', 'gh-months');
+      filteredMonths.forEach(({ weekIndex, label }) => {
+        const text = document.createElementNS(ns, 'text');
+        text.setAttribute('x', weekIndex * (BLOCK + MARGIN));
+        text.setAttribute('y', 11);
+        text.setAttribute('font-size', '10');
+        text.setAttribute('font-family', 'IBM Plex Mono, monospace');
+        text.setAttribute('fill', 'var(--fg-dim)');
+        text.textContent = label;
+        labelG.appendChild(text);
+      });
+      svg.appendChild(labelG);
+
+      // Blocks
+      const blocksG = document.createElementNS(ns, 'g');
+      weeks.forEach((week, wi) => {
+        week.forEach((day, di) => {
+          if (!day) return;
+          const rect = document.createElementNS(ns, 'rect');
+          rect.setAttribute('width', BLOCK);
+          rect.setAttribute('height', BLOCK);
+          rect.setAttribute('rx', RADIUS);
+          rect.setAttribute('ry', RADIUS);
+          rect.setAttribute('x', wi * (BLOCK + MARGIN));
+          rect.setAttribute('y', LABEL_H + di * (BLOCK + MARGIN));
+          rect.setAttribute('data-date', day.date);
+          rect.setAttribute('data-count', day.count);
+          rect.setAttribute('data-level', day.level);
+          rect.style.cursor = 'default';
+
+          // Color based on level using CSS variables
+          const opacity = day.level === 0 ? 0.08 : day.level === 1 ? 0.28 : day.level === 2 ? 0.48 : day.level === 3 ? 0.68 : 0.9;
+          rect.style.fill = 'var(--primary)';
+          rect.style.opacity = opacity;
+
+          // Tooltip events
+          rect.addEventListener('mouseenter', (e) => {
+            const count = day.count;
+            const text = `${count} contribution${count !== 1 ? 's' : ''} on ${formatDate(day.date)}`;
+            showTooltip(e.target, text);
+          });
+          rect.addEventListener('mouseleave', hideTooltip);
+
+          blocksG.appendChild(rect);
+        });
+      });
+      svg.appendChild(blocksG);
+
+      // Total count
+      const totalCount = contributions.reduce((sum, c) => sum + c.count, 0);
+      const year = new Date(contributions[contributions.length - 1].date).getFullYear();
+      totalEl.innerHTML = `${totalCount.toLocaleString('en')} contributions in ${year} on <a href="https://github.com/${username}" target="_blank" rel="noopener noreferrer" class="gh-link">GitHub</a>.`;
+
+    } catch (err) {
+      if (loading) {
+        loading.textContent = 'could not load contributions.';
+        loading.style.color = 'var(--fg-dim)';
+      }
+      console.error('GitHub contributions error:', err);
+    }
+  }
+
+  // Tooltip logic
+  let tooltipEl = null;
+  function getTooltip() {
+    if (!tooltipEl) {
+      tooltipEl = document.createElement('div');
+      tooltipEl.className = 'gh-tooltip';
+      document.body.appendChild(tooltipEl);
+    }
+    return tooltipEl;
+  }
+
+  function showTooltip(rect, text) {
+    const tt = getTooltip();
+    tt.textContent = text;
+    tt.classList.add('visible');
+
+    const rectBox = rect.getBoundingClientRect();
+    const ttBox = tt.getBoundingClientRect();
+
+    let top = rectBox.top - ttBox.height - 8;
+    let left = rectBox.left + rectBox.width / 2 - ttBox.width / 2;
+
+    // Keep inside viewport
+    if (left < 8) left = 8;
+    if (left + ttBox.width > window.innerWidth - 8) {
+      left = window.innerWidth - ttBox.width - 8;
+    }
+    if (top < 8) {
+      top = rectBox.bottom + 8;
+    }
+
+    tt.style.top = top + 'px';
+    tt.style.left = left + 'px';
+  }
+
+  function hideTooltip() {
+    const tt = getTooltip();
+    tt.classList.remove('visible');
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+
+<style>
+  .gh-link {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--fg-dim);
+    transition: text-decoration-color 0.2s;
+  }
+  .gh-link:hover {
+    text-decoration-color: var(--primary);
+    color: var(--primary);
+  }
+  .gh-months text {
+    fill: var(--fg-dim);
+  }
+</style>

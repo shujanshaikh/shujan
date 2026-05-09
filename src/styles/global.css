@@ -76,6 +76,29 @@
   }
 }
 
+/* Minimal scrollbar for GitHub contributions */
+.gh-wrap::-webkit-scrollbar {
+  height: 3px;
+}
+
+.gh-wrap::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gh-wrap::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 2px;
+}
+
+.gh-wrap::-webkit-scrollbar-thumb:hover {
+  background: var(--fg-muted);
+}
+
+.gh-wrap {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
 @layer components {
   .reveal {
     opacity: 0;
