@@ -103,19 +103,25 @@ const webPageSchema = {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap"
       rel="stylesheet"
     />
 
     <script is:inline>
       (function () {
+        const applyTheme = (theme) => {
+          const html = document.documentElement;
+          html.setAttribute('data-theme', theme);
+          html.classList.toggle('dark', theme === 'dark');
+        };
+
         const stored = localStorage.getItem('theme');
         if (stored === 'light' || stored === 'dark') {
-          document.documentElement.setAttribute('data-theme', stored);
+          applyTheme(stored);
         } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
-          document.documentElement.setAttribute('data-theme', 'light');
+          applyTheme('light');
         } else {
-          document.documentElement.setAttribute('data-theme', 'dark');
+          applyTheme('dark');
         }
       })();
     </script>
@@ -125,6 +131,19 @@ const webPageSchema = {
 
     <script is:inline>
       (function () {
+        // Theme toggle stays active even when motion is reduced.
+        const toggle = document.getElementById('theme-toggle');
+        if (toggle) {
+          toggle.addEventListener('click', () => {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            html.classList.toggle('dark', next === 'dark');
+            localStorage.setItem('theme', next);
+          });
+        }
+
         const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (prefersReducedMotion) return;
 
@@ -143,18 +162,6 @@ const webPageSchema = {
         document.querySelectorAll('.reveal').forEach((el) => {
           observer.observe(el);
         });
-
-        // Theme toggle
-        const toggle = document.getElementById('theme-toggle');
-        if (toggle) {
-          toggle.addEventListener('click', () => {
-            const html = document.documentElement;
-            const current = html.getAttribute('data-theme');
-            const next = current === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
-          });
-        }
       })();
     </script>
   </body>
